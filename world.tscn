@@ -1,0 +1,67 @@
+[gd_scene load_steps=7 format=3 uid="uid://bp76c8drbtx5l"]
+
+[ext_resource type="PackedScene" uid="uid://p2phrlhbpedn" path="res://player.tscn" id="1_yx7q7"]
+[ext_resource type="Texture2D" uid="uid://cblbxbds6c0r8" path="res://Sprites/Wall.png" id="2_qgnrd"]
+[ext_resource type="Texture2D" uid="uid://b4xjphdqhcw76" path="res://Sprites/Background.png" id="3_nwj20"]
+[ext_resource type="Script" path="res://Camera.gd" id="4_gn70w"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5ltro"]
+size = Vector2(1317, 203)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pa3bw"]
+size = Vector2(201.5, 425.5)
+
+[node name="world" type="Node2D"]
+position = Vector2(40, -238)
+
+[node name="Floor" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+position = Vector2(554, 723)
+shape = SubResource("RectangleShape2D_5ltro")
+
+[node name="Player" parent="." instance=ExtResource("1_yx7q7")]
+position = Vector2(115, 474)
+scale = Vector2(3, 3)
+
+[node name="Wall" type="StaticBody2D" parent="."]
+position = Vector2(577, 593)
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Wall"]
+position = Vector2(-678, -78)
+shape = SubResource("RectangleShape2D_pa3bw")
+
+[node name="Sprite2D" type="Sprite2D" parent="Wall/CollisionShape2D2"]
+position = Vector2(569, 41)
+scale = Vector2(0.225833, 0.412604)
+texture = ExtResource("2_qgnrd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall"]
+position = Vector2(599, -65)
+shape = SubResource("RectangleShape2D_pa3bw")
+
+[node name="Sprite2D" type="Sprite2D" parent="Wall/CollisionShape2D"]
+position = Vector2(-40.9999, -125)
+scale = Vector2(0.225833, 0.412604)
+texture = ExtResource("2_qgnrd")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Wall"]
+position = Vector2(-62, 92)
+shape = SubResource("RectangleShape2D_pa3bw")
+
+[node name="Sprite2D" type="Sprite2D" parent="Wall/CollisionShape2D3"]
+position = Vector2(-658, -303)
+scale = Vector2(0.225833, 0.412604)
+texture = ExtResource("2_qgnrd")
+
+[node name="Background" type="Sprite2D" parent="."]
+z_index = -1
+position = Vector2(503.406, 486.094)
+scale = Vector2(0.525495, 0.244089)
+texture = ExtResource("3_nwj20")
+
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("player")]
+script = ExtResource("4_gn70w")
+player = NodePath("../Player")
+smoothing_enabled = true
+smoothing_distance = 10

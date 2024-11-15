@@ -1,0 +1,183 @@
+[gd_scene load_steps=25 format=3 uid="uid://p2phrlhbpedn"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_r8xuj"]
+[ext_resource type="Texture2D" uid="uid://cebekiip4uw5w" path="res://Sprites/Dash.png" id="3_35a4h"]
+[ext_resource type="Texture2D" uid="uid://d1t44ebvfmp8x" path="res://Sprites/Walking/Walking16.png" id="3_rxnnw"]
+[ext_resource type="Texture2D" uid="uid://cqv5vvbx5imq6" path="res://Sprites/Walking/Walking8.png" id="4_8rl6a"]
+[ext_resource type="Texture2D" uid="uid://d2bnwye0cmc76" path="res://Sprites/Walking/Walking9.png" id="5_8khg5"]
+[ext_resource type="Texture2D" uid="uid://tudlp5418oe8" path="res://Sprites/Walking/Walking10.png" id="6_elppl"]
+[ext_resource type="Texture2D" uid="uid://jo4stuacx2dy" path="res://Sprites/Walking/Walking11.png" id="7_rxmrd"]
+[ext_resource type="Texture2D" uid="uid://c3uqld2ynbmrx" path="res://Sprites/Walking/Walking12.png" id="8_835v4"]
+[ext_resource type="Texture2D" uid="uid://bjs7pnvn0055u" path="res://Sprites/Walking/Walking13.png" id="9_56wdv"]
+[ext_resource type="Texture2D" uid="uid://qmc177cd2apj" path="res://Sprites/Walking/Walking14.png" id="10_m4xa2"]
+[ext_resource type="Texture2D" uid="uid://fa1ukhpt1nui" path="res://Sprites/Walking/Walking1.png" id="11_p71gp"]
+[ext_resource type="Texture2D" uid="uid://b82wmgugrd4nl" path="res://Sprites/Walking/Walking2.png" id="12_v8a1i"]
+[ext_resource type="Texture2D" uid="uid://dnoxbc0rkkpbn" path="res://Sprites/Walking/Walking3.png" id="13_7yp0q"]
+[ext_resource type="Texture2D" uid="uid://8teec5kvfoof" path="res://Sprites/Walking/Walking4.png" id="14_k3c3w"]
+[ext_resource type="Texture2D" uid="uid://bg6vgpqkmqkod" path="res://Sprites/Walking/Walking5.png" id="15_3xufc"]
+[ext_resource type="Texture2D" uid="uid://ck1rn7mchqca1" path="res://Sprites/Walking/Walking6.png" id="16_ue1c4"]
+[ext_resource type="Texture2D" uid="uid://c4rdk1x6aaym" path="res://Sprites/Walking/Walking7.png" id="17_1j1gj"]
+[ext_resource type="Texture2D" uid="uid://1kqnjdfcynrb" path="res://Sprites/benny_wallslide.png" id="17_nff3w"]
+[ext_resource type="Texture2D" uid="uid://dk85kgblhfo2h" path="res://Sprites/Benny_LedgeClimb.png" id="18_bwme0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xbui0"]
+size = Vector2(10, 3)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_b1gwu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_35a4h")
+}],
+"loop": false,
+"name": &"Dashing",
+"speed": 21.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_rxnnw")
+}],
+"loop": false,
+"name": &"Fall",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_8rl6a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_8khg5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_elppl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_rxmrd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_835v4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_56wdv")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_m4xa2")
+}],
+"loop": false,
+"name": &"Jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_p71gp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_v8a1i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_7yp0q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_k3c3w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_3xufc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_ue1c4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_1j1gj")
+}],
+"loop": true,
+"name": &"Run",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("17_nff3w")
+}],
+"loop": true,
+"name": &"Wall_Hang",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("17_nff3w")
+}],
+"loop": true,
+"name": &"Wall_Slide",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("18_bwme0")
+}],
+"loop": true,
+"name": &"Wall_jump",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pbb73"]
+size = Vector2(10, 0)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cjdty"]
+size = Vector2(8, 27)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4aotk"]
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_r8xuj")
+
+[node name="RightCheck" type="ShapeCast2D" parent="."]
+position = Vector2(5, -12)
+shape = SubResource("RectangleShape2D_xbui0")
+target_position = Vector2(0, 21)
+
+[node name="LeftCheck" type="ShapeCast2D" parent="."]
+position = Vector2(-4, -12)
+shape = SubResource("RectangleShape2D_xbui0")
+target_position = Vector2(0, 21)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -2)
+sprite_frames = SubResource("SpriteFrames_b1gwu")
+animation = &"Wall_Hang"
+autoplay = "Idle"
+frame_progress = 0.0145701
+
+[node name="WallHang" type="CollisionShape2D" parent="."]
+position = Vector2(0, -14)
+shape = SubResource("RectangleShape2D_pbb73")
+
+[node name="BodyCollision" type="CollisionShape2D" parent="."]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_cjdty")
+
+[node name="dash_timer" type="Timer" parent="."]
+wait_time = 0.2
+
+[node name="can_dash" type="Timer" parent="."]
+wait_time = 0.75
+
+[node name="WallCheck" type="ShapeCast2D" parent="."]
+position = Vector2(0, -5)
+shape = SubResource("RectangleShape2D_4aotk")
+target_position = Vector2(0, 5)
+
+[node name="FloorCheck" type="RayCast2D" parent="."]
+position = Vector2(0, -5)
+target_position = Vector2(0, 24)
+
+[node name="TopCheck" type="ShapeCast2D" parent="."]
+position = Vector2(0, -15)
+shape = SubResource("RectangleShape2D_xbui0")
+target_position = Vector2(0, 0)
+
+[connection signal="timeout" from="dash_timer" to="." method="_on_dash_timer_timeout"]
+[connection signal="timeout" from="can_dash" to="." method="_on_can_dash_timeout"]
