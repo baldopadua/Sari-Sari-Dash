@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://p2phrlhbpedn"]
+[gd_scene load_steps=32 format=3 uid="uid://p2phrlhbpedn"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_r8xuj"]
 [ext_resource type="Texture2D" uid="uid://cebekiip4uw5w" path="res://Sprites/Dash.png" id="3_35a4h"]
@@ -10,13 +10,20 @@
 [ext_resource type="Texture2D" uid="uid://c3uqld2ynbmrx" path="res://Sprites/Walking/Walking12.png" id="8_835v4"]
 [ext_resource type="Texture2D" uid="uid://bjs7pnvn0055u" path="res://Sprites/Walking/Walking13.png" id="9_56wdv"]
 [ext_resource type="Texture2D" uid="uid://qmc177cd2apj" path="res://Sprites/Walking/Walking14.png" id="10_m4xa2"]
+[ext_resource type="Texture2D" uid="uid://dm1wi8qflh0rb" path="res://Sprites/Benny_LedgeClimb1.png" id="11_k7cfp"]
 [ext_resource type="Texture2D" uid="uid://fa1ukhpt1nui" path="res://Sprites/Walking/Walking1.png" id="11_p71gp"]
+[ext_resource type="Texture2D" uid="uid://cee0wckhb6eu4" path="res://Sprites/Benny_LedgeClimb2.png" id="12_7p2fm"]
 [ext_resource type="Texture2D" uid="uid://b82wmgugrd4nl" path="res://Sprites/Walking/Walking2.png" id="12_v8a1i"]
+[ext_resource type="Texture2D" uid="uid://1smdf0w7npwj" path="res://Sprites/Benny_LedgeClimb3.png" id="13_1kdo4"]
 [ext_resource type="Texture2D" uid="uid://dnoxbc0rkkpbn" path="res://Sprites/Walking/Walking3.png" id="13_7yp0q"]
 [ext_resource type="Texture2D" uid="uid://8teec5kvfoof" path="res://Sprites/Walking/Walking4.png" id="14_k3c3w"]
+[ext_resource type="Texture2D" uid="uid://b8unaum1s7gks" path="res://Sprites/Benny_LedgeClimb4.png" id="14_yn5ll"]
+[ext_resource type="Texture2D" uid="uid://fx4uosdjliwv" path="res://Sprites/Benny_LedgeClimb5.png" id="15_2d28c"]
 [ext_resource type="Texture2D" uid="uid://bg6vgpqkmqkod" path="res://Sprites/Walking/Walking5.png" id="15_3xufc"]
+[ext_resource type="Texture2D" uid="uid://d1ipdwnpmi23c" path="res://Sprites/Benny_LedgeClimb6.png" id="16_7mk3s"]
 [ext_resource type="Texture2D" uid="uid://ck1rn7mchqca1" path="res://Sprites/Walking/Walking6.png" id="16_ue1c4"]
 [ext_resource type="Texture2D" uid="uid://c4rdk1x6aaym" path="res://Sprites/Walking/Walking7.png" id="17_1j1gj"]
+[ext_resource type="Texture2D" uid="uid://cait85jqiqlag" path="res://Sprites/Benny_LedgeClimb7.png" id="17_1ricm"]
 [ext_resource type="Texture2D" uid="uid://1kqnjdfcynrb" path="res://Sprites/benny_wallslide.png" id="17_nff3w"]
 [ext_resource type="Texture2D" uid="uid://dk85kgblhfo2h" path="res://Sprites/Benny_LedgeClimb.png" id="18_bwme0"]
 
@@ -70,6 +77,32 @@ animations = [{
 }],
 "loop": false,
 "name": &"Jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_k7cfp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_7p2fm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_1kdo4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_yn5ll")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_2d28c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_7mk3s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_1ricm")
+}],
+"loop": true,
+"name": &"Ledge_Climb",
 "speed": 5.0
 }, {
 "frames": [{
@@ -147,9 +180,8 @@ target_position = Vector2(0, 21)
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -2)
 sprite_frames = SubResource("SpriteFrames_b1gwu")
-animation = &"Wall_Hang"
+animation = &"Ledge_Climb"
 autoplay = "Idle"
-frame_progress = 0.0145701
 
 [node name="WallHang" type="CollisionShape2D" parent="."]
 position = Vector2(0, -14)

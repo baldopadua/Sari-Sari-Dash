@@ -50,7 +50,7 @@ func _physics_process(delta):
 		if velocity.y > 0:
 			Falling = true
 			$AnimatedSprite2D.play("Fall")
-	check_ledge_grab()
+	check_ledge_grab(delta)
 	jump(delta)
 	wall_sliding(delta)
 	move_and_slide()
@@ -87,7 +87,7 @@ func wall_sliding(delta):
 		velocity.y += wall_slide * delta
 		velocity.y = min(velocity.y, wall_slide)
 
-func check_ledge_grab():
+func check_ledge_grab(delta):
 	if $WallCheck.is_colliding() and not $FloorCheck.is_colliding() and velocity.y == 0:
 		Ledge_Grab = true
 		if $LeftCheck.is_colliding():
@@ -101,3 +101,22 @@ func check_ledge_grab():
 			Ledge_Grab = false
 			is_wall_sliding = true
 			$WallHang.disabled = true
+
+		if Input.is_action_just_pressed("JumpUp") and (Input.is_action_pressed("left") or Input.is_action_pressed("right")):
+			ledge_climb(delta)
+func ledge_climb(delta):
+	velocity.y += Gravity * delta
+	Ledge_Grab = false
+	$WallHang.disabled = true
+	velocity.y = -JUMP_FORCE
+
+	var push_force = SPEED * 10  # Horizontal push force
+
+	if $LeftCheck.is_colliding():
+		$AnimatedSprite2D.flip_h = false
+		velocity.x -= push_force  # Push to the right
+		$AnimatedSprite2D.play("Ledge_Climb")
+	elif $RightCheck.is_colliding():
+		$AnimatedSprite2D.flip_h = true
+		velocity.x += push_force  # Push to the left
+		$AnimatedSprite2D.play("Ledge_Climb")
