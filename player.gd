@@ -4,6 +4,7 @@ extends CharacterBody2D
 @export var Gravity: int = 1200
 @export var JUMP_FORCE: int = 650
 @export var Dash_Speed: int = 900
+@export var Run_Speed: int = 10
 const wall_jump_pushback = 1000
 const wall_slide = 100
 const ACCELERATION = 10000
@@ -23,12 +24,10 @@ func _physics_process(delta):
 		velocity_x += direction * ACCELERATION * delta
 		velocity_x = clamp(velocity_x, -SPEED, SPEED)
 		velocity.x = velocity_x
-		
-		if is_on_floor():
+		if is_on_floor() and !Running:
 			Jumping = false
 			Falling = false
 			Ledge_Grab = false
-			Running = true
 			is_wall_sliding = false
 			$AnimatedSprite2D.play("Run")
 		last_facing_direction = direction
@@ -39,9 +38,9 @@ func _physics_process(delta):
 		if is_on_floor():
 			Jumping = false
 			Falling = false
-			Running = false
 			Ledge_Grab = false
 			is_wall_sliding = false
+			Running = false
 			$AnimatedSprite2D.play("Idle")
 	$AnimatedSprite2D.flip_h = last_facing_direction == -1
 
@@ -54,6 +53,7 @@ func _physics_process(delta):
 	jump(delta)
 	wall_sliding(delta)
 	move_and_slide()
+	run(direction)
 
 func move_velocity_x(vel_x, delta):
 	if vel_x > 0:
@@ -64,14 +64,18 @@ func move_velocity_x(vel_x, delta):
 
 func jump(delta):
 	velocity.y += Gravity * delta
-	if Input.is_action_just_pressed("jump"):
+	Jumping = false
+	if Ledge_Grab:
+		return
+
+	if Input.is_action_just_pressed("jump") and !Jumping:
 		$WallHang.disabled = false
 		Jumping = true
-		
+
 		if is_on_floor():
 			$AnimatedSprite2D.play("Jump")
 			velocity.y = -JUMP_FORCE
-		
+
 func wall_sliding(delta):
 	if is_on_wall() and !is_on_floor():
 		if Input.is_action_pressed("slide_down"):
@@ -88,6 +92,7 @@ func wall_sliding(delta):
 		velocity.y = min(velocity.y, wall_slide)
 
 func check_ledge_grab(delta):
+	Running = false 
 	if $WallCheck.is_colliding() and not $FloorCheck.is_colliding() and velocity.y == 0:
 		Ledge_Grab = true
 		if $LeftCheck.is_colliding():
@@ -110,13 +115,24 @@ func ledge_climb(delta):
 	$WallHang.disabled = true
 	velocity.y = -JUMP_FORCE
 
-	var push_force = SPEED * 10  # Horizontal push force
+	var push_force = SPEED * 10   
 
 	if $LeftCheck.is_colliding():
 		$AnimatedSprite2D.flip_h = false
-		velocity.x -= push_force  # Push to the right
+		velocity.x -= push_force  
 		$AnimatedSprite2D.play("Ledge_Climb")
 	elif $RightCheck.is_colliding():
 		$AnimatedSprite2D.flip_h = true
-		velocity.x += push_force  # Push to the left
+		velocity.x += push_force  
 		$AnimatedSprite2D.play("Ledge_Climb")
+
+func run(direction):
+	Running = true 
+	if direction != 0 and is_on_floor() and Running:
+		if Input.is_action_pressed("Run"):
+			Running = true 
+			$AnimatedSprite2D.play("Sprint")
+			SPEED = 450
+		else:
+			SPEED = 350
+			Running = false

@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://p2phrlhbpedn"]
+[gd_scene load_steps=38 format=3 uid="uid://p2phrlhbpedn"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_r8xuj"]
 [ext_resource type="Texture2D" uid="uid://cebekiip4uw5w" path="res://Sprites/Dash.png" id="3_35a4h"]
@@ -22,10 +22,16 @@
 [ext_resource type="Texture2D" uid="uid://bg6vgpqkmqkod" path="res://Sprites/Walking/Walking5.png" id="15_3xufc"]
 [ext_resource type="Texture2D" uid="uid://d1ipdwnpmi23c" path="res://Sprites/Benny_LedgeClimb6.png" id="16_7mk3s"]
 [ext_resource type="Texture2D" uid="uid://ck1rn7mchqca1" path="res://Sprites/Walking/Walking6.png" id="16_ue1c4"]
-[ext_resource type="Texture2D" uid="uid://c4rdk1x6aaym" path="res://Sprites/Walking/Walking7.png" id="17_1j1gj"]
 [ext_resource type="Texture2D" uid="uid://cait85jqiqlag" path="res://Sprites/Benny_LedgeClimb7.png" id="17_1ricm"]
 [ext_resource type="Texture2D" uid="uid://1kqnjdfcynrb" path="res://Sprites/benny_wallslide.png" id="17_nff3w"]
 [ext_resource type="Texture2D" uid="uid://dk85kgblhfo2h" path="res://Sprites/Benny_LedgeClimb.png" id="18_bwme0"]
+[ext_resource type="Texture2D" uid="uid://cluao5ehx8tgx" path="res://Sprites/WalkToRun/benny_walktorun1.png" id="24_6jkr4"]
+[ext_resource type="Texture2D" uid="uid://dn8clirayseyd" path="res://Sprites/WalkToRun/benny_walktorun2.png" id="25_s082d"]
+[ext_resource type="Texture2D" uid="uid://dwm864sk4euit" path="res://Sprites/WalkToRun/benny_walktorun3.png" id="26_bcq3l"]
+[ext_resource type="Texture2D" uid="uid://mt3vieb812n8" path="res://Sprites/WalkToRun/benny_walktorun4.png" id="27_qrm0e"]
+[ext_resource type="Texture2D" uid="uid://5s82dh6pg7ml" path="res://Sprites/WalkToRun/benny_walktorun5.png" id="28_ytofc"]
+[ext_resource type="Texture2D" uid="uid://cep1c8orpih4d" path="res://Sprites/WalkToRun/benny_walktorun6.png" id="29_q8con"]
+[ext_resource type="Texture2D" uid="uid://3gkf4suysaqo" path="res://Sprites/WalkToRun/benny_walktorun7.png" id="30_0k7go"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xbui0"]
 size = Vector2(10, 3)
@@ -69,7 +75,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"Idle",
-"speed": 8.0
+"speed": 11.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -87,13 +93,13 @@ animations = [{
 "texture": ExtResource("12_7p2fm")
 }, {
 "duration": 1.0,
-"texture": ExtResource("13_1kdo4")
-}, {
-"duration": 1.0,
 "texture": ExtResource("14_yn5ll")
 }, {
 "duration": 1.0,
 "texture": ExtResource("15_2d28c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_1kdo4")
 }, {
 "duration": 1.0,
 "texture": ExtResource("16_7mk3s")
@@ -101,14 +107,11 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("17_1ricm")
 }],
-"loop": true,
+"loop": false,
 "name": &"Ledge_Climb",
-"speed": 5.0
+"speed": 15.0
 }, {
 "frames": [{
-"duration": 1.0,
-"texture": ExtResource("11_p71gp")
-}, {
 "duration": 1.0,
 "texture": ExtResource("12_v8a1i")
 }, {
@@ -119,17 +122,43 @@ animations = [{
 "texture": ExtResource("14_k3c3w")
 }, {
 "duration": 1.0,
+"texture": ExtResource("11_p71gp")
+}, {
+"duration": 1.0,
 "texture": ExtResource("15_3xufc")
 }, {
 "duration": 1.0,
 "texture": ExtResource("16_ue1c4")
-}, {
-"duration": 1.0,
-"texture": ExtResource("17_1j1gj")
 }],
 "loop": true,
 "name": &"Run",
-"speed": 8.0
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("24_6jkr4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_s082d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_bcq3l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_qrm0e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_ytofc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_q8con")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_0k7go")
+}],
+"loop": true,
+"name": &"Sprint",
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -154,6 +183,11 @@ animations = [{
 "loop": true,
 "name": &"Wall_jump",
 "speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"new_animation_1",
+"speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pbb73"]
@@ -168,11 +202,13 @@ size = Vector2(8, 27)
 script = ExtResource("1_r8xuj")
 
 [node name="RightCheck" type="ShapeCast2D" parent="."]
+visible = false
 position = Vector2(5, -12)
 shape = SubResource("RectangleShape2D_xbui0")
 target_position = Vector2(0, 21)
 
 [node name="LeftCheck" type="ShapeCast2D" parent="."]
+visible = false
 position = Vector2(-4, -12)
 shape = SubResource("RectangleShape2D_xbui0")
 target_position = Vector2(0, 21)
@@ -180,14 +216,17 @@ target_position = Vector2(0, 21)
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -2)
 sprite_frames = SubResource("SpriteFrames_b1gwu")
-animation = &"Ledge_Climb"
+animation = &"Fall"
 autoplay = "Idle"
+frame_progress = 1.0
 
 [node name="WallHang" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, -14)
 shape = SubResource("RectangleShape2D_pbb73")
 
 [node name="BodyCollision" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_cjdty")
 
@@ -198,15 +237,18 @@ wait_time = 0.2
 wait_time = 0.75
 
 [node name="WallCheck" type="ShapeCast2D" parent="."]
+visible = false
 position = Vector2(0, -5)
 shape = SubResource("RectangleShape2D_4aotk")
 target_position = Vector2(0, 5)
 
 [node name="FloorCheck" type="RayCast2D" parent="."]
+visible = false
 position = Vector2(0, -5)
 target_position = Vector2(0, 24)
 
 [node name="TopCheck" type="ShapeCast2D" parent="."]
+visible = false
 position = Vector2(0, -15)
 shape = SubResource("RectangleShape2D_xbui0")
 target_position = Vector2(0, 0)
